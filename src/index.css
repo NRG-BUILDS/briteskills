@@ -31,6 +31,10 @@
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
 
+    --body: 225 4% 40%;
+    --heading: 228 4% 26%;
+    --link: 225 77% 59%;
+
     --accent: 192 72% 21%;
     --accent-foreground: 29 96% 56%;
 
@@ -106,7 +110,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-body bg-background;
     font-family:
       "Inter",
       -apple-system,
@@ -126,6 +130,7 @@
   h4,
   h5,
   h6 {
+    @apply text-heading;
     font-family: "Satoshi", sans-serif;
   }
 

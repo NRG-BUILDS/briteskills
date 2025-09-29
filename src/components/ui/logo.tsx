@@ -1,40 +1,52 @@
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import logo from "@/assets/brand/groomica-icon.png";
-import logoSecondary from "@/assets/brand/groomica-icon-secondary.png";
+import logo from "@/assets/brand/briteskills.png";
 
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
-  variant?: "secondary" | "primary";
-  icon?: boolean;
 }
 
-export function Logo({
-  className,
-  variant = "primary",
-  size = "md",
-  icon = false,
-}: LogoProps) {
-  const textSizeClasses = {
-    sm: "text-xl",
-    md: "text-xl",
-    lg: "text-2xl",
-    xl: "text-4xl",
-  };
-  const iconSizeClasses = {
-    sm: "size-5",
-    md: "size-16",
-    lg: "size-24",
-    xl: "size-8",
+export function Logo({ className, size = "md" }: LogoProps) {
+  const [variant, setVariant] = useState<"light" | "dark">("light"); // Default to light
+
+  useEffect(() => {
+    // Check the theme after mounting
+    setVariant(
+      document.documentElement.classList.contains("dark") ? "dark" : "light",
+    );
+
+    const observer = new MutationObserver(() => {
+      setVariant(
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      );
+      console.log(document.documentElement.classList);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const sizeClasses = {
+    sm: "w-24",
+    md: "w-32",
+    lg: "w-36",
+    xl: "w-48",
   };
 
   return (
-    <div className="flex w-fit items-center justify-center gap-2">
-      <div className={cn("", textSizeClasses[size], className)}>
-        <span>
-          Brite<span className="text-primary">Skills</span>
-        </span>
+    <>
+      <div className={cn("", sizeClasses[size], className)}>
+        <img
+          src={logo}
+          alt="Briteskills"
+          className="h-full w-full object-cover"
+        />
       </div>
-    </div>
+    </>
   );
 }

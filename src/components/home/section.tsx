@@ -69,7 +69,7 @@ export function Section({ title, id }: Props) {
         )}
         <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:gap-4 xl:grid-cols-5">
           {skills.map((skill, index) => (
-            <Link to={`/skill/${id}`}>
+            <Link to={`/service/${id}`}>
               <SkillCard key={index} skill={skill} />
             </Link>
           ))}

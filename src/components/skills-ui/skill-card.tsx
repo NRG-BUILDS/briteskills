@@ -68,18 +68,16 @@ export const SkillCard = ({ skill }: Props) => {
 
       {/* Footer */}
       <div className="flex items-center justify-between border-t p-2 md:p-3 md:py-5">
-        <div className="flex items-center gap-1 text-border">
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault(); // Also prevent default if needed
+          }}
+          className="flex items-center gap-1 text-border"
+        >
           <Popover>
-            <PopoverTrigger
-              asChild
-              onClick={(e) => {
-                e.preventDefault(); // prevents navigation
-                e.stopPropagation(); // stops bubbling
-              }}
-            >
-              <button>
-                <Menu />
-              </button>
+            <PopoverTrigger>
+              <Menu />
             </PopoverTrigger>
             <PopoverContent className="w-fit overflow-clip rounded-[32px] p-0">
               <div className="flex items-center gap-4 border-b p-4">

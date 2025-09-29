@@ -11,10 +11,8 @@ import ExplorePage from "./pages/explore";
 import ServicePage from "./pages/service";
 import MainLayout from "./components/layout/main-layout";
 import ProfilePage from "./pages/profile";
-import ProfileLayout from "./pages/profile/layout";
-import ListingForm from "./pages/business/create-a-business/listing-form";
-import BusinessManage from "./pages/business/manage";
-import SetAppointment from "./pages/service/set-appointment";
+
+import SetAppointment from "./pages/service/send-message";
 
 const App = () => {
   return (
@@ -32,9 +30,8 @@ const App = () => {
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/service/:id" element={<ServicePage />} />
           <Route path="/service/:id/book" element={<SetAppointment />} />
-          <Route path="/profile/*" element={<ProfileLayout />} />
         </Route>
-        <Route path="/business/create" element={<ListingForm />} />
+
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -29,6 +29,9 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        link: "hsl(var(--link))",
+        body: "hsl(var(--body))",
+        heading: "hsl(var(--heading))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

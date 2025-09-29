@@ -1,55 +1,55 @@
 import React from "react";
+import Architect from "@/assets/images/hero-carousel/architect.jpeg";
+import Builder from "@/assets/images/hero-carousel/builder.jpeg";
+import Carpenter from "@/assets/images/hero-carousel/carpenter.jpeg";
+import Electrician from "@/assets/images/hero-carousel/electrician.jpeg";
+import Cobbler from "@/assets/images/hero-carousel/cobbler.jpeg";
+import Plumber from "@/assets/images/hero-carousel/plumber.jpg";
 
 const ModernMarquee = () => {
   // Sample data for the marquee boxes
   const items = [
     {
       id: 1,
-      title: "Innovation",
-      subtitle: "Tech Forward",
+      title: "Architecture",
+      subtitle: "Ibadan",
       color: "from-blue-500 to-purple-600",
+      image: Architect,
     },
     {
       id: 2,
-      title: "Design",
-      subtitle: "Creative Vision",
+      title: "Building",
+      subtitle: "Ogun State",
       color: "from-pink-500 to-rose-600",
+      image: Builder,
     },
     {
       id: 3,
-      title: "Development",
-      subtitle: "Code Excellence",
+      title: "Plumbing",
+      subtitle: "Port harcourt",
       color: "from-green-500 to-teal-600",
+      image: Plumber,
     },
     {
       id: 4,
-      title: "Strategy",
-      subtitle: "Smart Solutions",
+      title: "Carpentry",
+      subtitle: "Kaduna",
       color: "from-orange-500 to-red-600",
+      image: Carpenter,
     },
     {
       id: 5,
-      title: "Growth",
-      subtitle: "Scale Up",
+      title: "Electrician",
+      subtitle: "Lagos",
       color: "from-indigo-500 to-blue-600",
+      image: Electrician,
     },
     {
       id: 6,
-      title: "Analytics",
-      subtitle: "Data Driven",
+      title: "Cobbler",
+      subtitle: "Abia",
       color: "from-purple-500 to-pink-600",
-    },
-    {
-      id: 7,
-      title: "Security",
-      subtitle: "Trust First",
-      color: "from-gray-600 to-gray-800",
-    },
-    {
-      id: 8,
-      title: "Performance",
-      subtitle: "Speed Matters",
-      color: "from-yellow-500 to-orange-600",
+      image: Cobbler,
     },
   ];
 
@@ -67,10 +67,15 @@ const ModernMarquee = () => {
           {items.map((item) => (
             <div
               key={`first-${item.id}`}
-              className="group mx-3 size-60 flex-shrink-0 cursor-pointer rounded-xl bg-gradient-to-br shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group relative mx-3 size-60 flex-shrink-0 cursor-pointer overflow-clip rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
+              <img
+                src={item.image}
+                alt=""
+                className="absolute left-0 top-0 size-full"
+              />
               <div
-                className={`h-full w-full rounded-xl bg-gradient-to-br ${item.color} relative flex flex-col justify-between overflow-hidden p-4`}
+                className={`bg-gradient-to-brrelative flex h-full w-full flex-col justify-between overflow-hidden rounded-xl p-4`}
               >
                 {/* Background decoration */}
                 <div className="absolute right-0 top-0 h-16 w-16 -translate-y-8 translate-x-8 transform rounded-full bg-white bg-opacity-10"></div>
@@ -78,7 +83,9 @@ const ModernMarquee = () => {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold leading-tight text-white">
+                  <h3
+                    className={`w-fit rounded-full bg-gradient-to-br p-1 ${item.color} px-2 text-xs font-bold leading-tight text-white`}
+                  >
                     {item.title}
                   </h3>
                 </div>
@@ -91,16 +98,19 @@ const ModernMarquee = () => {
               </div>
             </div>
           ))}
-
-          {/* Second set of items for seamless loop */}
+          {/* Second set of items for seemless transiton */}
           {items.map((item) => (
             <div
-              key={`second-${item.id}`}
-              className="group mx-3 h-36 w-36 flex-shrink-0 cursor-pointer rounded-xl bg-gradient-to-br shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              style={{ width: "150px", height: "150px" }}
+              key={`first-${item.id}`}
+              className="group relative mx-3 size-60 flex-shrink-0 cursor-pointer overflow-clip rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
+              <img
+                src={item.image}
+                alt=""
+                className="absolute left-0 top-0 size-full"
+              />
               <div
-                className={`h-full w-full rounded-xl bg-gradient-to-br ${item.color} relative flex flex-col justify-between overflow-hidden p-4`}
+                className={`bg-gradient-to-brrelative flex h-full w-full flex-col justify-between overflow-hidden rounded-xl p-4`}
               >
                 {/* Background decoration */}
                 <div className="absolute right-0 top-0 h-16 w-16 -translate-y-8 translate-x-8 transform rounded-full bg-white bg-opacity-10"></div>
@@ -108,7 +118,9 @@ const ModernMarquee = () => {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold leading-tight text-white">
+                  <h3
+                    className={`w-fit rounded-full bg-gradient-to-br p-1 ${item.color} px-2 text-xs font-bold leading-tight text-white`}
+                  >
                     {item.title}
                   </h3>
                 </div>
@@ -123,7 +135,7 @@ const ModernMarquee = () => {
           ))}
         </div>
       </div>
-
+      {/* @ts-ignore */}
       <style jsx>{`
         @keyframes marquee {
           0% {
