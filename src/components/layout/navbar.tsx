@@ -100,7 +100,7 @@ export function Navbar() {
                 type="text"
                 aria-label="Search"
                 className="w-full border border-r-0 border-input px-4 outline-none focus:border-primary focus:ring-0"
-                placeholder="Search..."
+                placeholder="What service do you need today?"
               />
               <button
                 type="button"
@@ -183,8 +183,8 @@ export function Navbar() {
               Orders
             </Link>
             <Link
-              to={"/business/create"}
-              className="text-sm font-semibold text-primary hover:underline"
+              to={"/artisan/dashboard"}
+              className="whitespace-nowrap text-sm font-semibold text-primary hover:underline"
             >
               Artisan Dashboard
             </Link>
@@ -204,7 +204,7 @@ export function Navbar() {
               </PopoverTrigger>
               <PopoverContent
                 align="end"
-                className="w-fit p-0 *:flex *:items-center *:gap-2 *:p-3 hover:*:bg-neutral-100"
+                className="w-fit overflow-clip p-0 *:flex *:items-center *:gap-2 *:p-3 hover:*:bg-neutral-100"
               >
                 {isAuthenticated && (
                   <div className="flex items-center border-b">

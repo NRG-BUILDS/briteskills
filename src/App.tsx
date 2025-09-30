@@ -13,6 +13,9 @@ import MainLayout from "./components/layout/main-layout";
 import ProfilePage from "./pages/profile";
 
 import SetAppointment from "./pages/service/send-message";
+import ProfileLayout from "./pages/profile/layout";
+import ArtisanDashboard from "./pages/artisan/dashboard";
+import SkillsDashboard from "./pages/artisan/skills";
 
 const App = () => {
   return (
@@ -29,7 +32,11 @@ const App = () => {
           <Route path="/" element={<Index />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/service/:id" element={<ServicePage />} />
-          <Route path="/service/:id/book" element={<SetAppointment />} />
+
+          <Route path="/profile/*" element={<ProfileLayout />} />
+
+          <Route path="/artisan/dashboard" element={<ArtisanDashboard />} />
+          <Route path="/artisan/skills" element={<SkillsDashboard />} />
         </Route>
 
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

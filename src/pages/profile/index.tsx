@@ -1,489 +1,219 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  User,
-  MapPin,
-  Phone,
-  Calendar,
-  Edit3,
-  Building2,
-  Save,
-  X,
-  Clock,
-  MoreVertical,
-  Trash2,
-} from "lucide-react";
-import { Image } from "@/components/ui/image";
-import { Popover, PopoverTrigger } from "@/components/ui/popover";
-import { PopoverContent } from "@radix-ui/react-popover";
-import { Link } from "react-router-dom";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-const ProfilePage = () => {
-  // Sample data based on the provided structure
-  const [profileData, setProfileData] = useState({
-    id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    dob: "2025-08-08",
-    phone_number: "555-0123",
-    address: {
-      id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      street: "123 Main Street",
-      street2: "Apt 4B",
-      city: "New York",
-      state: "NY",
-      zipcode: 10001,
-    },
+export default function ProfileSettings() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "Chirag",
+    email: "u*****@gmail.com",
+    onlineStatus: "GO OFFLINE FOR...",
+    deactivationReason: "",
   });
 
-  const [editData, setEditData] = useState(profileData);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEdit = () => {
-    setIsEditing(true);
-    setEditData(profileData);
-  };
-
   const handleSave = () => {
-    setProfileData(editData);
     setIsEditing(false);
+    // Save logic here
   };
 
   const handleCancel = () => {
-    setEditData(profileData);
     setIsEditing(false);
+    // Reset form data if needed
   };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const formatAddress = (address) => {
-    const parts = [
-      address.street,
-      address.street2,
-      `${address.city}, ${address.state} ${address.zipcode}`,
-    ].filter(Boolean);
-    return parts.join(", ");
-  };
-
-  if (isEditing) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="">
-          <Card className="border-0 shadow-lg">
-            <CardHeader className="bg-primary text-primary-foreground">
-              <CardTitle className="flex items-center gap-3 text-2xl font-bold">
-                <Edit3 className="h-7 w-7" />
-                Edit Profile
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 p-8">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-4">
-                  <div>
-                    <Label
-                      htmlFor="phone"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Phone Number
-                    </Label>
-                    <Input
-                      id="phone"
-                      value={editData.phone_number}
-                      onChange={(e) =>
-                        setEditData({
-                          ...editData,
-                          phone_number: e.target.value,
-                        })
-                      }
-                      className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="dob"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Date of Birth
-                    </Label>
-                    <Input
-                      id="dob"
-                      type="date"
-                      value={editData.dob}
-                      onChange={(e) =>
-                        setEditData({ ...editData, dob: e.target.value })
-                      }
-                      className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <Label
-                      htmlFor="street"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Street Address
-                    </Label>
-                    <Input
-                      id="street"
-                      value={editData.address.street}
-                      onChange={(e) =>
-                        setEditData({
-                          ...editData,
-                          address: {
-                            ...editData.address,
-                            street: e.target.value,
-                          },
-                        })
-                      }
-                      className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="street2"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Apartment/Suite
-                    </Label>
-                    <Input
-                      id="street2"
-                      value={editData.address.street2}
-                      onChange={(e) =>
-                        setEditData({
-                          ...editData,
-                          address: {
-                            ...editData.address,
-                            street2: e.target.value,
-                          },
-                        })
-                      }
-                      className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-3">
-                <div>
-                  <Label
-                    htmlFor="city"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    City
-                  </Label>
-                  <Input
-                    id="city"
-                    value={editData.address.city}
-                    onChange={(e) =>
-                      setEditData({
-                        ...editData,
-                        address: { ...editData.address, city: e.target.value },
-                      })
-                    }
-                    className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor="state"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    State
-                  </Label>
-                  <Input
-                    id="state"
-                    value={editData.address.state}
-                    maxLength={2}
-                    onChange={(e) =>
-                      setEditData({
-                        ...editData,
-                        address: {
-                          ...editData.address,
-                          state: e.target.value.toUpperCase(),
-                        },
-                      })
-                    }
-                    className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor="zipcode"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    ZIP Code
-                  </Label>
-                  <Input
-                    id="zipcode"
-                    type="number"
-                    value={editData.address.zipcode}
-                    onChange={(e) =>
-                      setEditData({
-                        ...editData,
-                        address: {
-                          ...editData.address,
-                          zipcode: parseInt(e.target.value),
-                        },
-                      })
-                    }
-                    className="mt-1 focus:border-primary focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-3 border-t pt-6">
-                <Button
-                  onClick={handleSave}
-                  className="flex-1 bg-primary py-2.5 font-medium text-primary-foreground transition-all duration-200 hover:bg-primary/90"
-                >
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Changes
-                </Button>
-                <Button
-                  onClick={handleCancel}
-                  variant="outline"
-                  className="flex-1 py-2.5 font-medium transition-all duration-200"
-                >
-                  <X className="mr-2 h-4 w-4" />
-                  Cancel
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="space-y-2">
-        <Card className="border-0 shadow-lg">
-          <CardHeader className="bg-primary text-primary-foreground">
-            <CardTitle className="flex items-center gap-3 text-3xl font-bold">
-              <div className="rounded-full bg-primary-foreground/20 p-3">
-                <User className="h-8 w-8" />
-              </div>
-              Profile Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-8">
-            <div className="grid gap-8 md:grid-cols-2">
-              {/* Personal Information */}
-              <div className="space-y-6">
-                <div className="rounded-xl border bg-gray-100 p-6">
-                  <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-800">
-                    <User className="h-5 w-5 text-primary" />
-                    Personal Details
-                  </h3>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <Phone className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="text-sm text-gray-500">Phone Number</p>
-                        <p className="font-medium text-gray-800">
-                          {profileData.phone_number}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <Calendar className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="text-sm text-gray-500">Date of Birth</p>
-                        <p className="font-medium text-gray-800">
-                          {formatDate(profileData.dob)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Address Information */}
-              <div className="space-y-6">
-                <div className="rounded-xl border bg-gray-100 p-6">
-                  <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-800">
-                    <MapPin className="h-5 w-5 text-primary" />
-                    Address
-                  </h3>
-
-                  <div className="space-y-2">
-                    <p className="font-medium text-gray-800">
-                      {profileData.address.street}
-                    </p>
-                    {profileData.address.street2 && (
-                      <p className="text-gray-600">
-                        {profileData.address.street2}
-                      </p>
-                    )}
-                    <p className="text-gray-600">
-                      {profileData.address.city}, {profileData.address.state}{" "}
-                      {profileData.address.zipcode}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="mt-8 flex flex-col gap-4 border-t border-gray-200 pt-8 sm:flex-row">
-              <Button
-                onClick={handleEdit}
-                className="flex-1 bg-primary py-3 text-lg font-medium text-primary-foreground shadow-lg transition-all duration-200 hover:bg-primary/90"
-              >
-                <Edit3 className="mr-2 h-5 w-5" />
-                Edit Profile
-              </Button>
-
-              <Button
-                onClick={() => console.log("Navigate to business management")}
-                className="flex-1 bg-secondary py-3 text-lg font-medium text-secondary-foreground shadow-lg transition-all duration-200 hover:bg-secondary/90"
-              >
-                <Building2 className="mr-2 h-5 w-5" />
-                Manage Business
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Appointments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="lg:grid-cols3 grid gap-4 md:grid-cols-2">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <AppointmentCard i={i} />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-};
-
-export default ProfilePage;
-
-type Props = {
-  i: number;
-  fromMe?: boolean;
-};
-export const AppointmentCard = ({ i, fromMe = true }: Props) => {
-  return (
-    <div className="shadow-eleate-03 rounded-lg border py-3">
-      <div
-        className={`-ml-0.5 divide-y border-l-4 font-medium *:p-3 ${fromMe ? "border-primary" : "border-secondary"}`}
-      >
-        <div className="flex items-start justify-between">
-          <div className="space-y-1.5">
-            <h4 className="text-xs text-muted-foreground">
-              {fromMe
-                ? "You've set an appointment"
-                : "Someone booked an appointment"}
-            </h4>
-            <div className="flex items-center gap-1 text-sm">
-              <Clock size={14} />
-              <p>Wed Aug 10 • 8:00 - 8:30AM</p>
-            </div>
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-4xl rounded border border-border/50 bg-white p-8 shadow-sm">
+        {/* Header */}
+        <div className="flex justify-end">
+          <div className="mb-6 text-sm text-gray-600">
+            Need to update your artisan profile?{" "}
+            <a href="#" className="text-emerald-500 hover:text-emerald-600">
+              Go to Artisan Dashboard
+            </a>
           </div>
-          <Popover>
-            <PopoverTrigger>
-              <MoreVertical className="size-4 text-muted-foreground" />
-            </PopoverTrigger>
-            <PopoverContent
-              align="end"
-              className="w-fit divide-y overflow-clip rounded-lg border bg-white p-0 text-sm *:flex *:items-center *:gap-2 *:p-3 hover:*:bg-neutral-100"
+        </div>
+
+        {/* Profile Form */}
+        <div className="mb-8 space-y-6">
+          {/* Full Name */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label
+              htmlFor="fullName"
+              className="text-right font-medium text-gray-700"
             >
-              <Link to={"/service/0/book"}>
-                <Edit3 className="size-5" />
-                <span>Make changes</span>
-              </Link>
-              <Link
-                to={"#"}
-                className="text-destructive hover:!bg-destructive/10"
-              >
-                <Trash2 className="size-5" />
-                <span>Cancel</span>
-              </Link>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="size-10 overflow-clip rounded-full">
-            <Image src="" />
-          </div>
-          <div className="grid text-sm">
-            <p>Bon Iver Auto Repair Shop</p>
-            <span className="text-muted-foreground">
-              {i % 3 ? "First available staff" : "Chude Uzokafor"}
-            </span>
-          </div>
-        </div>
-        <div
-          className={`m-2 mb-0 rounded-lg border !border-b ${fromMe ? "bg-muted text-muted-foreground" : "border-secondary bg-secondary/5 text-secondary *:*:border-secondary/40"}`}
-        >
-          <h4 className="text-lg font-medium">Details</h4>
-          {fromMe ? (
-            <>
-              <div className="divide-y px-1 text-sm *:py-3">
-                <div>
-                  <h5>Address</h5>
-                  <p className="">Siegfriedstrasse 30 12051, Berlin, DE</p>
-                </div>
-                <div>
-                  <h5>Phone</h5>
-                  <a href="tel:+2340979711780" className="">
-                    +2340979711780
-                  </a>
-                </div>
-                <div>
-                  <h5>Email</h5>
-                  <a href="mailto:ajanlekok@salon.de" className="">
-                    ajanlekok@salon.de
-                  </a>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="divide-y px-1 text-sm *:py-3">
-              <div>
-                <h5>Name</h5>
-                <p className="">Emmanuel Ozimar</p>
-              </div>
-              <div>
-                <h5>Phone</h5>
-                <a href="tel:+2340979711780" className="">
-                  +2340973331780
-                </a>
-              </div>
-              <div>
-                <h5>Service</h5>
-                <a href="mailto:ajanlekok@salon.de" className="">
-                  Manicure (12:00PM - 12:55PM)
-                </a>
-              </div>
-              <div>
-                <h5>Address</h5>
-                <a href="mailto:ajanlekok@salon.de" className="">
-                  Address 1 (Siegfriedstrasse 30 12051, Berlin, DE)
-                </a>
-              </div>
+              FULL NAME
+            </Label>
+            <div className="col-span-3">
+              <Input
+                id="fullName"
+                value={formData.fullName}
+                onChange={(e) =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
+                disabled={!isEditing}
+                className="w-full disabled:cursor-default disabled:opacity-100"
+              />
             </div>
-          )}
+          </div>
+
+          {/* Email */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label
+              htmlFor="email"
+              className="text-right font-medium text-gray-700"
+            >
+              EMAIL
+            </Label>
+            <div className="col-span-3">
+              <Input
+                id="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                disabled={!isEditing}
+                className="w-full disabled:cursor-default disabled:opacity-100"
+              />
+            </div>
+          </div>
+
+          {/* Online Status */}
+          <div className="grid grid-cols-4 items-start gap-4">
+            <div className="text-right">
+              <Label className="flex items-center justify-end gap-2 font-medium text-gray-700">
+                ONLINE STATUS
+                <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+              </Label>
+              <p className="mt-1 text-xs text-gray-500">
+                When online, your Gigs are visible under the Online search
+                filter.
+              </p>
+            </div>
+            <div className="col-span-3">
+              <Select
+                value={formData.onlineStatus}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, onlineStatus: value })
+                }
+                disabled={!isEditing}
+              >
+                <SelectTrigger className="w-full disabled:cursor-default disabled:opacity-100">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="GO OFFLINE FOR...">
+                    GO OFFLINE FOR...
+                  </SelectItem>
+                  <SelectItem value="online">Online</SelectItem>
+                  <SelectItem value="offline">Offline</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        {/* Edit/Save Button */}
+        {!isEditing ? (
+          <div className="mb-8 flex justify-end">
+            <Button
+              onClick={() => setIsEditing(true)}
+              className="bg-emerald-500 px-8 text-white hover:bg-emerald-600"
+            >
+              Edit Profile
+            </Button>
+          </div>
+        ) : (
+          <div className="mb-8 flex justify-end gap-3">
+            <Button onClick={handleCancel} variant="outline" className="px-6">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              className="bg-emerald-500 px-8 text-white hover:bg-emerald-600"
+            >
+              Save Changes
+            </Button>
+          </div>
+        )}
+
+        {/* Divider */}
+        <div className="my-8 border-t border-gray-200"></div>
+
+        {/* Account Deactivation Section */}
+        <div className="space-y-6">
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right font-medium text-gray-700">
+              ACCOUNT DEACTIVATION
+            </Label>
+            <div className="col-span-3">
+              <Alert className="border-destructive/50 bg-destructive/5">
+                <AlertDescription className="text-sm text-gray-700">
+                  <p className="mb-2 font-semibold">
+                    What happens when you deactivate your account?
+                  </p>
+                  <ul className="space-y-1 text-gray-600">
+                    <li>
+                      • Your profile and Gigs won't be shown on BriteSkills
+                      anymore.
+                    </li>
+                    <li>• Active orders will be cancelled.</li>
+                    <li>• You won't be able to re-activate your Gigs.</li>
+                  </ul>
+                </AlertDescription>
+              </Alert>
+            </div>
+          </div>
+
+          {/* Deactivation Reason */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="reason" className="text-right text-gray-700">
+              I'm leaving because...
+            </Label>
+            <div className="col-span-3">
+              <Select
+                value={formData.deactivationReason}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, deactivationReason: value })
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Choose a reason" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="not-satisfied">
+                    Not satisfied with service
+                  </SelectItem>
+                  <SelectItem value="too-expensive">Too expensive</SelectItem>
+                  <SelectItem value="found-alternative">
+                    Found an alternative
+                  </SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Deactivate Button */}
+          <div className="flex justify-end">
+            <Button
+              variant="outline"
+              className="border-gray-300 text-gray-600 hover:bg-gray-50"
+            >
+              Deactivate Account
+            </Button>
+          </div>
         </div>
       </div>
     </div>
   );
-};
+}

@@ -12,17 +12,14 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { LucideMessageSquareText } from "lucide-react";
 import ProfileTabs from "./tab-list";
-import ProfilePage, { AppointmentCard } from ".";
-import BusinessManage from "../business/manage";
+import ProfilePage from ".";
 import { Button } from "@/components/ui/button";
 
 const useIsMobile = () => window.innerWidth < 768;
 
 export default function ProfileLayout() {
   const [isMobile, setIsMobile] = useState(useIsMobile());
-  const [expandUpcoming, setExpandUpcoming] = useState(false);
   const routes = [
-    { path: "business/", component: <BusinessManage /> },
     { path: "/", component: isMobile ? <ProfileTabs /> : <ProfilePage /> },
     { path: "/manage", component: <ProfilePage /> },
   ];
@@ -45,39 +42,20 @@ export default function ProfileLayout() {
 
   // Desktop layout: show both side by side
   return (
-    <main className="relative">
-      <div className="relative flex h-full min-h-screen w-full flex-none items-stretch divide-x bg-white shadow-elevate-03 *:transition-all *:duration-500">
-        <div className="sticky top-0 h-full w-1/5">
-          <ProfileTabs />
-        </div>
-        <div
-          className={`${expandUpcoming ? "w-0" : "w-full"} max-w-[55%] overflow-clip`}
-        >
-          <Routes>
-            {routes.map((route) => (
-              <Route path={route.path} element={route.component} />
-            ))}
-          </Routes>
-        </div>
-        <div className={`${expandUpcoming ? "w-4/5" : "w-1/4"}`}>
-          <div className="sticky top-0 max-h-[100dvh] overflow-y-auto p-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-bold">Upcoming Appointments</h2>
-              <Button
-                variant={"link"}
-                className="px-0"
-                onClick={() => setExpandUpcoming(!expandUpcoming)}
-              >
-                Tap to {expandUpcoming ? "collapse" : "expand"}
-              </Button>
+    <main className="relative bg-[#f5f5f5] p-6">
+      <div className="relative mx-auto flex h-full min-h-screen max-w-7xl flex-none items-start gap-10 *:transition-all *:duration-500">
+        <div className="grid gap-6 lg:grid-cols-12">
+          <div className="relative h-full lg:col-span-3">
+            <div className="sticky top-16">
+              <ProfileTabs />
             </div>
-            <div className="flex flex-wrap gap-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div className="w-full max-w-[350px]">
-                  <AppointmentCard i={i} fromMe={i > 2} />
-                </div>
+          </div>
+          <div className={`w-full overflow-clip lg:col-span-9`}>
+            <Routes>
+              {routes.map((route) => (
+                <Route path={route.path} element={route.component} />
               ))}
-            </div>
+            </Routes>
           </div>
         </div>
       </div>

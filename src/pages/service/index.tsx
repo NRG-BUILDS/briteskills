@@ -131,7 +131,7 @@ const ServicePage = () => {
           </h1>
           <div className="flex items-start gap-3 lg:items-center">
             <div className="mt-1 size-8 overflow-clip rounded-full bg-blue-400 lg:mt-0">
-              <Image />
+              <Image src="" />
             </div>
             <div className="flex flex-wrap items-center gap-x-2 font-semibold">
               <span className="font-medium">airb123</span>
