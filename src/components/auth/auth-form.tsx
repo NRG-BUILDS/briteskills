@@ -29,14 +29,13 @@ export type LoginResponse = {
 
 interface AuthFormProps {
   type: "login" | "signup";
-  user: "customer" | "business";
+  user: "client" | "artisan";
 }
 
 export function AuthForm({ type, user }: AuthFormProps) {
   const [step, setStep] = useState<"credentials" | "forgot-password">(
     "credentials",
   );
-  const [email, setEmail] = useState("");
 
   const [form, setForm] = useState({
     first_name: "",
@@ -179,7 +178,7 @@ export function AuthForm({ type, user }: AuthFormProps) {
               form={form}
               setForm={setForm}
               type={type}
-              user={user}
+              user={"artisan"}
             />
 
             {type === "login" && (
