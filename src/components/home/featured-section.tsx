@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { SkillCard } from "../skills-ui/skill-card";
 import { ReactNode } from "react";
 
@@ -68,7 +69,9 @@ export function FeatureSection({ title, id }: Props) {
         )}
         <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:gap-4 xl:grid-cols-5">
           {skills.map((skill, index) => (
-            <SkillCard key={index} skill={skill} />
+            <Link to={`/service/${index}`}>
+              <SkillCard key={index} skill={skill} />
+            </Link>
           ))}
         </div>
       </div>

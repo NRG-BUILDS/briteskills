@@ -7,9 +7,9 @@ import { Input } from "../ui/input";
 
 const Hero = () => {
   return (
-    <section className="relative flex min-h-[70dvh] items-center justify-center">
+    <section className="relative flex items-center justify-center pt-10 lg:min-h-[70dvh]">
       <div className="max-w-4xl space-y-5 p-6 text-center text-lg">
-        <h1 className="w-full text-4xl font-extrabold leading-10 tracking-tight lg:text-6xl">
+        <h1 className="w-full text-5xl font-extrabold tracking-tight lg:text-6xl lg:leading-10">
           Find Skilled Artisans
           <br />
           Near You
@@ -29,7 +29,7 @@ const Hero = () => {
             <LucideSearch size={36} />
           </Button>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <p>Popular:</p>
           {[
             "Architecture",
