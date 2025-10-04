@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Heart,
   House,
+  LayoutDashboard,
   LogIn,
   LogOut,
   LucideLogIn,
@@ -14,6 +15,7 @@ import {
   Menu,
   MessageSquareText,
   Phone,
+  Search,
   User2,
   X,
 } from "lucide-react";
@@ -36,6 +38,7 @@ interface NavItem {
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileSearchbarOpen, setIsMobileSearchbarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth,
@@ -61,9 +64,9 @@ export function Navbar() {
   const navLinks: NavItem[] = [
     { label: "Home", href: "/", icon: <House /> },
     {
-      label: "Sell on Groomica",
-      href: "/business/create",
-      icon: <Megaphone />,
+      label: "Artisan Dashboard",
+      href: "/artisan/dashboard",
+      icon: <LayoutDashboard />,
     },
     isAuthenticated &&
       user && {
@@ -71,10 +74,10 @@ export function Navbar() {
         href: "/chats",
         icon: <MessageSquareText />,
       },
-    { label: "Contact", href: "/contact", icon: <Phone /> },
-    isAuthenticated
-      ? { label: "Profile", href: "/profile", icon: <User2 /> }
-      : { label: "Login", href: "/auth/login", icon: <LogIn /> },
+    { label: "Orders", href: "/contact", icon: <Phone /> },
+
+    { label: "Profile", href: "/profile", icon: <User2 /> },
+    { label: "Login", href: "/auth/login", icon: <LogIn /> },
     ,
   ].filter(Boolean);
 
@@ -93,37 +96,12 @@ export function Navbar() {
           <Link to="/" className="z-50 hidden w-1/4 md:block">
             <Logo size="xl" />
           </Link>
+          <Link to="/" className="z-50 block w-1/4 md:hidden">
+            <Logo size="md" />
+          </Link>
 
-          <div className="w-full max-w-xl">
-            <div className="inline-flex w-full items-stretch">
-              <input
-                type="text"
-                aria-label="Search"
-                className="w-full border border-r-0 border-input px-4 outline-none focus:border-primary focus:ring-0"
-                placeholder="What service do you need today?"
-              />
-              <button
-                type="button"
-                aria-label="Submit search"
-                className="flex size-10 min-w-10 items-center justify-center bg-black text-white hover:bg-primary focus:outline-none"
-              >
-                {/* simple search icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
-                  />
-                </svg>
-              </button>
-            </div>
+          <div className="hidden w-full max-w-xl md:block">
+            <Searchbar />
           </div>
 
           <div className="hidden w-1/4 items-center justify-end space-x-6 md:flex">
@@ -234,32 +212,38 @@ export function Navbar() {
           </div>
           {/* Desktop Navigation End */}
 
-          {/* Mobile Menu Toggle */}
-          <div className="w-fit md:hidden md:w-auto">
-            <Link
-              to={"/profile"}
-              className="z-50 block p-2"
-              aria-label="Proile popover trigger"
-            >
-              <User2 className="h-6 w-6" />
-            </Link>
-          </div>
+          {/* Mobile Navigation Start */}
+          <div className="flex items-center gap-2 md:hidden">
+            {/* Mobile Menu Toggle */}
 
-          <div className="z-50 w-fit md:hidden md:w-auto">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
+            <div className="z-50 w-fit">
+              <button
+                onClick={() => setIsMobileSearchbarOpen(!isMobileSearchbarOpen)}
+                className="p-2"
+                aria-label="Toggle menu"
+              >
+                <Search
+                  className={`h-6 w-6 ${isMobileSearchbarOpen ? "text-primary" : ""}`}
+                />
+              </button>
+            </div>
+            <div className="z-50 w-fit">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2"
+                aria-label="Toggle menu"
+              >
+                <User2 className="h-6 w-6" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      {isMobileSearchbarOpen && (
+        <div className="mt-2 w-full md:hidden">
+          <Searchbar autoFocus onBlur={() => setIsMobileSearchbarOpen(false)} />
+        </div>
+      )}
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -319,3 +303,43 @@ export function Navbar() {
 }
 
 export default Navbar;
+
+type Props = {
+  autoFocus?: boolean;
+  onBlur?: () => void;
+};
+export const Searchbar = ({ onBlur, autoFocus = false }: Props) => {
+  return (
+    <div className="inline-flex w-full items-stretch">
+      <input
+        type="text"
+        aria-label="Search"
+        autoFocus={autoFocus}
+        onBlur={onBlur}
+        className="w-full border border-r-0 border-input px-4 outline-none focus:border-primary focus:ring-0"
+        placeholder="What service do you need today?"
+      />
+      <button
+        type="button"
+        aria-label="Submit search"
+        className="flex size-10 min-w-10 items-center justify-center bg-black text-white hover:bg-primary focus:outline-none"
+      >
+        {/* simple search icon */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+          />
+        </svg>
+      </button>
+    </div>
+  );
+};

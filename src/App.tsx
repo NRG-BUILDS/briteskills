@@ -7,7 +7,6 @@ import Signup from "./pages/auth/signup";
 import Login from "./pages/auth/login";
 import VerifyOTP from "./pages/auth/verify-otp";
 import Index from "./pages/Index";
-import ExplorePage from "./pages/explore";
 import ServicePage from "./pages/service";
 import MainLayout from "./components/layout/main-layout";
 import ProfilePage from "./pages/profile";
@@ -15,7 +14,9 @@ import ProfilePage from "./pages/profile";
 import SetAppointment from "./pages/service/send-message";
 import ProfileLayout from "./pages/profile/layout";
 import ArtisanDashboard from "./pages/artisan/dashboard";
-import SkillsDashboard from "./pages/artisan/skills";
+import SkillsDashboard from "./pages/artisan/skills/skills";
+import CreateSkillsForm from "./pages/artisan/skills/create";
+import CategoriesPage from "./pages/categories/categories";
 
 const App = () => {
   return (
@@ -30,13 +31,14 @@ const App = () => {
 
         <Route element={<MainLayout />}>
           <Route path="/" element={<Index />} />
-          <Route path="/explore" element={<ExplorePage />} />
           <Route path="/service/:id" element={<ServicePage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
 
           <Route path="/profile/*" element={<ProfileLayout />} />
 
           <Route path="/artisan/dashboard" element={<ArtisanDashboard />} />
           <Route path="/artisan/skills" element={<SkillsDashboard />} />
+          <Route path="/artisan/skills/new" element={<CreateSkillsForm />} />
         </Route>
 
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

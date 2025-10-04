@@ -41,7 +41,7 @@ export default function ArtisanDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="mb-8 grid grid-cols-3 gap-6">
+        <div className="mb-8 grid gap-6 lg:grid-cols-3">
           {/* Available Funds */}
           <div className="rounded-lg border border-gray-200 bg-white p-6">
             <div className="mb-2 flex items-center gap-2">
